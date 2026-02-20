@@ -1,7 +1,7 @@
 # 🏰 HXZD — Minecraft 服务器官网
 
 <p align="center">
-  <strong>SAO (刀剑神域) 风格的 Minecraft 服务器门户网站</strong>
+  <strong>SAO(可能？)风格的 Minecraft 服务器门户网站</strong>
 </p>
 
 <p align="center">
@@ -175,6 +175,3 @@ server {
 
 MIT License
 
----
-
-<p align="center">⚔️ Built with SAO spirit ⚔️</p>
