@@ -1,0 +1,272 @@
+/* ============================================
+   SAO-Style Right-Side Navigation Buttons
+   ============================================ */
+
+.sao-nav {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+  padding: 8px 0;
+}
+
+.sao-nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ---------- Nav Toggle Trigger ---------- */
+.sao-nav::before {
+  content: '◆';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sao-accent);
+  font-size: 0.7rem;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.sao-nav:hover::before {
+  opacity: 0;
+}
+
+/* ---------- Button Base ---------- */
+.sao-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px 10px 14px;
+  min-width: 160px;
+  background: rgba(10, 14, 23, 0.65);
+  border: 1px solid rgba(100, 200, 255, 0.12);
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  color: var(--sao-text-muted);
+  font-size: 0.82rem;
+  font-family: var(--sao-font);
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  transform: translateX(160px);
+  opacity: 0;
+}
+
+.sao-nav:hover .sao-btn {
+  transform: translateX(90px);
+  opacity: 1;
+}
+
+.sao-nav:hover .sao-btn:hover {
+  transform: translateX(0);
+  background: rgba(100, 200, 255, 0.08);
+  border-color: rgba(100, 200, 255, 0.35);
+  color: #fff;
+}
+
+.sao-btn.active {
+  background: rgba(100, 200, 255, 0.1);
+  border-color: var(--sao-accent);
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--sao-accent), 0 0 15px rgba(100, 200, 255, 0.1);
+}
+
+.sao-nav:hover .sao-btn.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* 悬浮扫描线效果 */
+.sao-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(100, 200, 255, 0.06), transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+.sao-btn:hover::before {
+  left: 100%;
+}
+
+/* ---------- Icon ---------- */
+.sao-btn-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.sao-btn:hover .sao-btn-icon,
+.sao-btn.active .sao-btn-icon {
+  color: var(--sao-accent);
+  text-shadow: 0 0 8px rgba(100, 200, 255, 0.5);
+}
+
+/* ---------- Text ---------- */
+.sao-btn-text {
+  white-space: nowrap;
+  font-weight: 400;
+  transition: letter-spacing 0.3s;
+}
+
+.sao-btn:hover .sao-btn-text {
+  letter-spacing: 1.5px;
+}
+
+/* ---------- Diamond Indicator ---------- */
+.sao-btn-diamond {
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  transform: translateY(-50%) rotate(45deg);
+  transition: all 0.3s;
+}
+
+.sao-btn:hover .sao-btn-diamond {
+  border-color: rgba(100, 200, 255, 0.4);
+}
+
+.sao-btn.active .sao-btn-diamond {
+  background: var(--sao-accent);
+  border-color: var(--sao-accent);
+  box-shadow: 0 0 6px var(--sao-accent);
+}
+
+/* ---------- Login Button Special ---------- */
+.sao-btn-login {
+  margin-top: 8px;
+  border-color: rgba(240, 192, 64, 0.2);
+}
+
+.sao-btn-login:hover {
+  border-color: rgba(240, 192, 64, 0.5);
+  background: rgba(240, 192, 64, 0.08);
+}
+
+.sao-btn-login:hover .sao-btn-icon {
+  color: var(--sao-gold);
+  text-shadow: 0 0 8px rgba(240, 192, 64, 0.5);
+}
+
+.sao-btn-login:hover .sao-btn-diamond {
+  border-color: rgba(240, 192, 64, 0.5);
+}
+
+.sao-btn-login.active {
+  border-color: var(--sao-gold);
+  box-shadow: inset 3px 0 0 var(--sao-gold), 0 0 15px rgba(240, 192, 64, 0.1);
+}
+
+.sao-btn-login.active .sao-btn-diamond {
+  background: var(--sao-gold);
+  border-color: var(--sao-gold);
+  box-shadow: 0 0 6px var(--sao-gold);
+}
+
+.sao-btn-login.active .sao-btn-icon {
+  color: var(--sao-gold);
+}
+
+/* ---------- Mobile: Bottom Bar ---------- */
+@media (max-width: 768px) {
+  .sao-nav {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    padding: 0;
+    background: rgba(10, 14, 23, 0.92);
+    border-top: 1px solid rgba(100, 200, 255, 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .sao-nav-container {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0;
+    padding: 0 4px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .sao-nav-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sao-nav::before {
+    display: none;
+  }
+
+  .sao-btn {
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 8px 12px 6px;
+    min-width: auto;
+    border: none;
+    border-radius: 0;
+    transform: none !important;
+    opacity: 1 !important;
+    background: transparent;
+    flex-shrink: 0;
+  }
+
+  .sao-btn:hover {
+    transform: none;
+    background: rgba(100, 200, 255, 0.06);
+  }
+
+  .sao-btn.active {
+    transform: none;
+    background: rgba(100, 200, 255, 0.08);
+    box-shadow: inset 0 -2px 0 var(--sao-accent);
+  }
+
+  .sao-btn-icon {
+    font-size: 1.1rem;
+  }
+
+  .sao-btn-text {
+    font-size: 0.6rem;
+    letter-spacing: 0;
+  }
+
+  .sao-btn:hover .sao-btn-text {
+    letter-spacing: 0;
+  }
+
+  .sao-btn-diamond {
+    display: none;
+  }
+
+  .sao-btn-login {
+    margin-top: 0;
+  }
+
+  .sao-btn::before {
+    display: none;
+  }
+}
+

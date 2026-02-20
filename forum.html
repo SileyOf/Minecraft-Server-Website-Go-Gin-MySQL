@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微论坛 - HXZD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sao-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-bg" id="customBg"></div>
+    <nav class="sao-nav" id="saoNav">
+        <div class="sao-nav-container">
+            <a href="index.html" class="sao-btn" data-index="0"><span class="sao-btn-icon">⌂</span><span class="sao-btn-text">Home</span><span class="sao-btn-diamond"></span></a>
+            <a href="gameplay.html" class="sao-btn" data-index="1"><span class="sao-btn-icon">⚔</span><span class="sao-btn-text">玩法</span><span class="sao-btn-diamond"></span></a>
+            <a href="map.html" class="sao-btn" data-index="2"><span class="sao-btn-icon">🗺</span><span class="sao-btn-text">世界地图</span><span class="sao-btn-diamond"></span></a>
+            <a href="announcements.html" class="sao-btn" data-index="3"><span class="sao-btn-icon">📢</span><span class="sao-btn-text">公告</span><span class="sao-btn-diamond"></span></a>
+            <a href="forum.html" class="sao-btn active" data-index="4"><span class="sao-btn-icon">💬</span><span class="sao-btn-text">微论坛</span><span class="sao-btn-diamond"></span></a>
+            <a href="about.html" class="sao-btn" data-index="5"><span class="sao-btn-icon">ℹ</span><span class="sao-btn-text">关于</span><span class="sao-btn-diamond"></span></a>
+            <a href="status.html" class="sao-btn" data-index="6"><span class="sao-btn-icon">◉</span><span class="sao-btn-text">服务器状态</span><span class="sao-btn-diamond"></span></a>
+            <a href="sponsor.html" class="sao-btn" data-index="7"><span class="sao-btn-icon">♥</span><span class="sao-btn-text">赞助</span><span class="sao-btn-diamond"></span></a>
+            <a href="login.html" class="sao-btn sao-btn-login" data-index="8" id="navAuthBtn"><span class="sao-btn-icon">▸</span><span class="sao-btn-text">登录</span><span class="sao-btn-diamond"></span></a>
+        </div>
+    </nav>
+    <div class="particles" id="particles"></div>
+
+    <main class="main-content">
+        <!-- 论坛列表视图 -->
+        <div id="forumListView">
+            <div class="page-title-bar">
+                <h1 class="page-title"><span class="sao-panel-diamond"></span> 微论坛</h1>
+                <button class="sao-submit-btn btn-small" id="newPostBtn" onclick="showNewPostForm()" style="display:none">
+                    ✦ 发表新帖
+                </button>
+            </div>
+
+            <!-- 分类筛选 -->
+            <div class="forum-categories">
+                <button class="forum-cat-btn active" data-cat="">全部</button>
+                <button class="forum-cat-btn" data-cat="general">综合</button>
+                <button class="forum-cat-btn" data-cat="discussion">讨论</button>
+                <button class="forum-cat-btn" data-cat="question">求助</button>
+                <button class="forum-cat-btn" data-cat="showcase">展示</button>
+                <button class="forum-cat-btn" data-cat="suggestion">建议</button>
+                <button class="forum-cat-btn" data-cat="whitelist">白名单申请</button>
+            </div>
+
+            <div class="forum-post-list" id="forumPostList">
+                <div class="loading-placeholder">加载中...</div>
+            </div>
+
+            <div class="forum-pagination" id="forumPagination"></div>
+        </div>
+
+        <!-- 帖子详情视图 -->
+        <div id="forumPostView" style="display:none">
+            <button class="sao-submit-btn btn-small btn-back" onclick="backToList()">← 返回列表</button>
+            <div class="sao-panel" id="postDetail"></div>
+            <div class="sao-panel comments-section" id="commentsSection"></div>
+        </div>
+
+        <!-- 发帖表单 -->
+        <div id="newPostFormView" style="display:none">
+            <button class="sao-submit-btn btn-small btn-back" onclick="backToList()">← 返回列表</button>
+            <div class="sao-panel">
+                <div class="sao-panel-header">
+                    <span class="sao-panel-diamond"></span>
+                    <span>NEW POST</span>
+                </div>
+                <form class="auth-form" id="newPostForm" onsubmit="submitNewPost(event)" style="padding:24px">
+                    <div class="sao-input-group">
+                        <label>标题</label>
+                        <input type="text" name="title" required minlength="2" placeholder="帖子标题">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>分类</label>
+                        <select name="category" class="sao-select">
+                            <option value="general">综合</option>
+                            <option value="discussion">讨论</option>
+                            <option value="question">求助</option>
+                            <option value="showcase">展示</option>
+                            <option value="suggestion">建议</option>
+                            <option value="whitelist">白名单申请</option>
+                        </select>
+                    </div>
+                    <div class="sao-input-group">
+                        <label>内容</label>
+                        <textarea name="content" required rows="10" placeholder="帖子内容..."></textarea>
+                    </div>
+                    <button type="submit" class="sao-submit-btn">
+                        <span class="sao-panel-diamond"></span> 发 布
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="sao-corner top-left"></div>
+    <div class="sao-corner bottom-right"></div>
+
+    <script src="js/common.js"></script>
+    <script src="js/forum.js"></script>
+    <script src="js/particles.js"></script>
+</body>
+</html>

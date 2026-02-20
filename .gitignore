@@ -1,0 +1,22 @@
+# Binaries
+backend/hxzd-server
+backend/hxzd-server-linux
+dist/
+
+# Environment
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Backup & temp
+backend/.backup/
+backend/fix_files.py
+*.swp
+*.swo
+*~

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HXZD - Minecraft Server</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sao-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 自定义背景 -->
+    <div class="custom-bg" id="customBg"></div>
+
+    <!-- SAO Style Right Side Navigation -->
+    <nav class="sao-nav" id="saoNav">
+        <div class="sao-nav-container">
+            <a href="index.html" class="sao-btn active" data-index="0">
+                <span class="sao-btn-icon">⌂</span>
+                <span class="sao-btn-text">Home</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="gameplay.html" class="sao-btn" data-index="1">
+                <span class="sao-btn-icon">⚔</span>
+                <span class="sao-btn-text">玩法</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="map.html" class="sao-btn" data-index="2">
+                <span class="sao-btn-icon">🗺</span>
+                <span class="sao-btn-text">世界地图</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="announcements.html" class="sao-btn" data-index="3">
+                <span class="sao-btn-icon">📢</span>
+                <span class="sao-btn-text">公告</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="forum.html" class="sao-btn" data-index="4">
+                <span class="sao-btn-icon">💬</span>
+                <span class="sao-btn-text">微论坛</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="about.html" class="sao-btn" data-index="5">
+                <span class="sao-btn-icon">ℹ</span>
+                <span class="sao-btn-text">关于</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="status.html" class="sao-btn" data-index="6">
+                <span class="sao-btn-icon">◉</span>
+                <span class="sao-btn-text">服务器状态</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="sponsor.html" class="sao-btn" data-index="7">
+                <span class="sao-btn-icon">♥</span>
+                <span class="sao-btn-text">赞助</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+            <a href="login.html" class="sao-btn sao-btn-login" data-index="8" id="navAuthBtn">
+                <span class="sao-btn-icon">▸</span>
+                <span class="sao-btn-text">登录</span>
+                <span class="sao-btn-diamond"></span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="hero-section">
+            <!-- MOTD Banner -->
+            <div class="motd-banner" id="motdBanner" style="display:none">
+                <span class="motd-indicator"></span>
+                <span id="motdText"></span>
+            </div>
+
+            <div class="sao-panel hero-panel">
+                <div class="sao-panel-header">
+                    <span class="sao-panel-diamond"></span>
+                    <span>SYSTEM ANNOUNCEMENT</span>
+                </div>
+                <div class="hero-content">
+                    <h1 class="glitch-text" data-text="HXZD">HXZD</h1>
+                    <p class="hero-subtitle" id="siteSubtitle">— Minecraft 生存服务器 —</p>
+                    <p class="hero-desc" id="siteDescription">欢迎来到虚拟世界的交汇点。在这里，每一个方块都承载着冒险与回忆。</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="onlinePlayers">—</span>
+                            <span class="stat-label">在线玩家</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="maxPlayers">—</span>
+                            <span class="stat-label">最大玩家</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="serverLatency">—</span>
+                            <span class="stat-label">延迟(ms)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-cards">
+                <div class="sao-panel info-card" style="animation-delay: 0.2s">
+                    <div class="sao-panel-header">
+                        <span class="sao-panel-diamond"></span>
+                        <span>ANNOUNCEMENTS</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>最新公告</h3>
+                        <ul class="news-list" id="newsList">
+                            <li class="loading-placeholder">加载中...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sao-panel info-card" style="animation-delay: 0.4s">
+                    <div class="sao-panel-header">
+                        <span class="sao-panel-diamond"></span>
+                        <span>SERVER INFO</span>
+                    </div>
+                    <div class="card-content">
+                        <h3>服务器信息 <small id="serverInfoLabel" style="font-weight:300;font-size:0.75rem;color:var(--sao-text-muted)"></small></h3>
+                        <div id="serverInfoRotator">
+                            <div class="server-info-item">
+                                <span>服务器地址</span>
+                                <span class="server-ip" id="serverIP" onclick="copyIP()">play.hxzd.com</span>
+                            </div>
+                            <div class="server-info-item">
+                                <span>游戏版本</span>
+                                <span id="serverVersion">—</span>
+                            </div>
+                            <div class="server-info-item">
+                                <span>服务器类型</span>
+                                <span id="serverType">—</span>
+                            </div>
+                            <div class="server-info-item">
+                                <span>在线玩家</span>
+                                <span id="serverPlayersInfo">—</span>
+                            </div>
+                            <div class="server-info-item">
+                                <span>状态</span>
+                                <span class="server-status-dot" id="serverStatusDot">● 查询中</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SAO Style Corner Decorations -->
+    <div class="sao-corner top-left"></div>
+    <div class="sao-corner bottom-right"></div>
+
+    <script src="js/common.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/particles.js"></script>
+</body>
+</html>

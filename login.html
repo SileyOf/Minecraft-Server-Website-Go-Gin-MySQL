@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - HXZD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sao-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-bg" id="customBg"></div>
+    <nav class="sao-nav" id="saoNav">
+        <div class="sao-nav-container">
+            <a href="index.html" class="sao-btn" data-index="0"><span class="sao-btn-icon">⌂</span><span class="sao-btn-text">Home</span><span class="sao-btn-diamond"></span></a>
+            <a href="gameplay.html" class="sao-btn" data-index="1"><span class="sao-btn-icon">⚔</span><span class="sao-btn-text">玩法</span><span class="sao-btn-diamond"></span></a>
+            <a href="map.html" class="sao-btn" data-index="2"><span class="sao-btn-icon">🗺</span><span class="sao-btn-text">世界地图</span><span class="sao-btn-diamond"></span></a>
+            <a href="announcements.html" class="sao-btn" data-index="3"><span class="sao-btn-icon">📢</span><span class="sao-btn-text">公告</span><span class="sao-btn-diamond"></span></a>
+            <a href="forum.html" class="sao-btn" data-index="4"><span class="sao-btn-icon">💬</span><span class="sao-btn-text">微论坛</span><span class="sao-btn-diamond"></span></a>
+            <a href="about.html" class="sao-btn" data-index="5"><span class="sao-btn-icon">ℹ</span><span class="sao-btn-text">关于</span><span class="sao-btn-diamond"></span></a>
+            <a href="status.html" class="sao-btn" data-index="6"><span class="sao-btn-icon">◉</span><span class="sao-btn-text">服务器状态</span><span class="sao-btn-diamond"></span></a>
+            <a href="sponsor.html" class="sao-btn" data-index="7"><span class="sao-btn-icon">♥</span><span class="sao-btn-text">赞助</span><span class="sao-btn-diamond"></span></a>
+            <a href="login.html" class="sao-btn sao-btn-login active" data-index="8" id="navAuthBtn"><span class="sao-btn-icon">▸</span><span class="sao-btn-text">登录</span><span class="sao-btn-diamond"></span></a>
+        </div>
+    </nav>
+    <div class="particles" id="particles"></div>
+
+    <main class="main-content">
+        <div class="auth-container">
+            <!-- 登录/注册 Tab 切换 -->
+            <div class="sao-panel auth-panel">
+                <div class="sao-panel-header">
+                    <span class="sao-panel-diamond"></span>
+                    <span id="authTitle">USER LOGIN</span>
+                </div>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">登录</button>
+                    <button class="auth-tab" data-tab="register">注册</button>
+                    <button class="auth-tab" data-tab="profile" id="profileTab" style="display:none">个人资料</button>
+                </div>
+
+                <!-- 登录表单 -->
+                <form class="auth-form" id="loginForm">
+                    <div class="sao-input-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" required autocomplete="username" placeholder="输入用户名">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>密码</label>
+                        <input type="password" name="password" required autocomplete="current-password" placeholder="输入密码">
+                    </div>
+                    <button type="submit" class="sao-submit-btn">
+                        <span class="sao-panel-diamond"></span> 登 录
+                    </button>
+                    <p class="auth-error" id="loginError"></p>
+                </form>
+
+                <!-- 注册表单 -->
+                <form class="auth-form" id="registerForm" style="display:none">
+                    <div class="sao-input-group">
+                        <label>用户名</label>
+                        <input type="text" name="username" required minlength="2" maxlength="32" placeholder="2-32个字符">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>密码</label>
+                        <input type="password" name="password" required minlength="6" autocomplete="new-password" placeholder="至少6位">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>确认密码</label>
+                        <input type="password" name="password_confirm" required autocomplete="new-password" placeholder="再次输入密码">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>邮箱 <span class="optional">(可选)</span></label>
+                        <input type="email" name="email" placeholder="your@email.com">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>Minecraft ID <span class="optional">(可选)</span></label>
+                        <input type="text" name="minecraft_id" placeholder="游戏内ID">
+                    </div>
+                    <button type="submit" class="sao-submit-btn">
+                        <span class="sao-panel-diamond"></span> 注 册
+                    </button>
+                    <p class="auth-error" id="registerError"></p>
+                </form>
+
+                <!-- 个人资料（登录后显示） -->
+                <div class="auth-form" id="profileForm" style="display:none">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <span>?</span>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profileUsername">—</h3>
+                            <span class="profile-role" id="profileRole">—</span>
+                        </div>
+                    </div>
+                    <div class="sao-input-group">
+                        <label>邮箱</label>
+                        <input type="email" id="profileEmail" placeholder="your@email.com">
+                    </div>
+                    <div class="sao-input-group">
+                        <label>Minecraft ID</label>
+                        <input type="text" id="profileMCID" placeholder="正版游戏内ID">
+                        <small style="color:var(--sao-text-muted);font-size:0.75rem;margin-top:4px;display:block">填写正版 Minecraft ID 后将自动获取游戏皮肤作为头像</small>
+                    </div>
+                    <button type="button" class="sao-submit-btn" onclick="saveProfile()">
+                        <span class="sao-panel-diamond"></span> 保存资料
+                    </button>
+
+                    <div class="profile-divider"></div>
+
+                    <!-- 修改用户名 - 可折叠 -->
+                    <button type="button" class="profile-expand-btn" onclick="toggleSection('usernameSection', this)">
+                        ▸ 修改用户名
+                    </button>
+                    <div class="profile-collapsible" id="usernameSection">
+                        <div class="sao-input-group">
+                            <label>新用户名</label>
+                            <input type="text" id="newUsername" placeholder="2-32个字符" minlength="2" maxlength="32">
+                        </div>
+                        <button type="button" class="sao-submit-btn btn-secondary" onclick="changeUsername()">
+                            确认修改用户名
+                        </button>
+                    </div>
+
+                    <!-- 修改密码 - 可折叠 -->
+                    <button type="button" class="profile-expand-btn" onclick="toggleSection('passwordSection', this)">
+                        ▸ 修改密码
+                    </button>
+                    <div class="profile-collapsible" id="passwordSection">
+                        <div class="sao-input-group">
+                            <label>旧密码</label>
+                            <input type="password" id="oldPassword" placeholder="当前密码">
+                        </div>
+                        <div class="sao-input-group">
+                            <label>新密码</label>
+                            <input type="password" id="newPassword" placeholder="至少6位">
+                        </div>
+                        <button type="button" class="sao-submit-btn btn-secondary" onclick="changePassword()">
+                            确认修改密码
+                        </button>
+                    </div>
+
+                    <div class="profile-divider"></div>
+
+                    <button type="button" class="sao-submit-btn btn-danger" onclick="logout()">
+                        退出登录
+                    </button>
+                    <button type="button" class="sao-submit-btn btn-admin" id="adminEntryBtn" style="display:none" onclick="location.href='admin.html'">
+                        ⚙ 进入管理面板
+                    </button>
+                    <p class="auth-error" id="profileError"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="sao-corner top-left"></div>
+    <div class="sao-corner bottom-right"></div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/particles.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告 - HXZD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sao-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-bg" id="customBg"></div>
+    <nav class="sao-nav" id="saoNav">
+        <div class="sao-nav-container">
+            <a href="index.html" class="sao-btn" data-index="0"><span class="sao-btn-icon">⌂</span><span class="sao-btn-text">Home</span><span class="sao-btn-diamond"></span></a>
+            <a href="gameplay.html" class="sao-btn" data-index="1"><span class="sao-btn-icon">⚔</span><span class="sao-btn-text">玩法</span><span class="sao-btn-diamond"></span></a>
+            <a href="map.html" class="sao-btn" data-index="2"><span class="sao-btn-icon">🗺</span><span class="sao-btn-text">世界地图</span><span class="sao-btn-diamond"></span></a>
+            <a href="announcements.html" class="sao-btn active" data-index="3"><span class="sao-btn-icon">📢</span><span class="sao-btn-text">公告</span><span class="sao-btn-diamond"></span></a>
+            <a href="forum.html" class="sao-btn" data-index="4"><span class="sao-btn-icon">💬</span><span class="sao-btn-text">微论坛</span><span class="sao-btn-diamond"></span></a>
+            <a href="about.html" class="sao-btn" data-index="5"><span class="sao-btn-icon">ℹ</span><span class="sao-btn-text">关于</span><span class="sao-btn-diamond"></span></a>
+            <a href="status.html" class="sao-btn" data-index="6"><span class="sao-btn-icon">◉</span><span class="sao-btn-text">服务器状态</span><span class="sao-btn-diamond"></span></a>
+            <a href="sponsor.html" class="sao-btn" data-index="7"><span class="sao-btn-icon">♥</span><span class="sao-btn-text">赞助</span><span class="sao-btn-diamond"></span></a>
+            <a href="login.html" class="sao-btn sao-btn-login" data-index="8" id="navAuthBtn"><span class="sao-btn-icon">▸</span><span class="sao-btn-text">登录</span><span class="sao-btn-diamond"></span></a>
+        </div>
+    </nav>
+    <div class="particles" id="particles"></div>
+
+    <main class="main-content">
+        <div class="page-title-bar">
+            <h1 class="page-title"><span class="sao-panel-diamond"></span> 公告</h1>
+        </div>
+        <div class="announcements-list" id="announcementsList">
+            <div class="loading-placeholder">加载中...</div>
+        </div>
+    </main>
+
+    <div class="sao-corner top-left"></div>
+    <div class="sao-corner bottom-right"></div>
+
+    <script src="js/common.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        HXZD.initNav();
+        await HXZD.loadBackground();
+        loadAnnouncements();
+    });
+
+    async function loadAnnouncements() {
+        try {
+            const res = await fetch(HXZD.API + '/announcements');
+            const data = await res.json();
+            const container = document.getElementById('announcementsList');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="sao-panel" style="padding:32px;text-align:center;color:var(--sao-text-muted)">暂无公告</div>';
+                return;
+            }
+            container.innerHTML = data.map(a => `
+                <div class="sao-panel announcement-card ${a.is_pinned ? 'pinned' : ''}">
+                    <div class="sao-panel-header">
+                        <span class="sao-panel-diamond"></span>
+                        <span>${a.is_pinned ? '<span class="pin-badge">📌 置顶</span>' : ''}${formatDate(a.created_at)}</span>
+                    </div>
+                    <div class="announcement-body">
+                        <h3>${escapeHtml(a.title)}</h3>
+                        <div class="announcement-content">${a.content || ''}</div>
+                        <div class="announcement-meta">
+                            <span>by ${escapeHtml(a.author?.username || '管理员')}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch(e) {
+            document.getElementById('announcementsList').innerHTML =
+                '<div class="sao-panel" style="padding:32px;text-align:center;color:var(--sao-text-muted)">加载失败</div>';
+        }
+    }
+
+    function formatDate(d) {
+        return new Date(d).toLocaleDateString('zh-CN', {year:'numeric',month:'2-digit',day:'2-digit'});
+    }
+    function escapeHtml(t) {
+        const d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML;
+    }
+    </script>
+    <script src="js/particles.js"></script>
+</body>
+</html>

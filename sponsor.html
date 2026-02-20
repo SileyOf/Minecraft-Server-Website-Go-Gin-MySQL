@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赞助 - HXZD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sao-buttons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-bg" id="customBg"></div>
+    <nav class="sao-nav" id="saoNav">
+        <div class="sao-nav-container">
+            <a href="index.html" class="sao-btn" data-index="0"><span class="sao-btn-icon">⌂</span><span class="sao-btn-text">Home</span><span class="sao-btn-diamond"></span></a>
+            <a href="gameplay.html" class="sao-btn" data-index="1"><span class="sao-btn-icon">⚔</span><span class="sao-btn-text">玩法</span><span class="sao-btn-diamond"></span></a>
+            <a href="map.html" class="sao-btn" data-index="2"><span class="sao-btn-icon">🗺</span><span class="sao-btn-text">世界地图</span><span class="sao-btn-diamond"></span></a>
+            <a href="announcements.html" class="sao-btn" data-index="3"><span class="sao-btn-icon">📢</span><span class="sao-btn-text">公告</span><span class="sao-btn-diamond"></span></a>
+            <a href="forum.html" class="sao-btn" data-index="4"><span class="sao-btn-icon">💬</span><span class="sao-btn-text">微论坛</span><span class="sao-btn-diamond"></span></a>
+            <a href="about.html" class="sao-btn" data-index="5"><span class="sao-btn-icon">ℹ</span><span class="sao-btn-text">关于</span><span class="sao-btn-diamond"></span></a>
+            <a href="status.html" class="sao-btn" data-index="6"><span class="sao-btn-icon">◉</span><span class="sao-btn-text">服务器状态</span><span class="sao-btn-diamond"></span></a>
+            <a href="sponsor.html" class="sao-btn active" data-index="7"><span class="sao-btn-icon">♥</span><span class="sao-btn-text">赞助</span><span class="sao-btn-diamond"></span></a>
+            <a href="login.html" class="sao-btn sao-btn-login" data-index="8" id="navAuthBtn"><span class="sao-btn-icon">▸</span><span class="sao-btn-text">登录</span><span class="sao-btn-diamond"></span></a>
+        </div>
+    </nav>
+    <div class="particles" id="particles"></div>
+
+    <main class="main-content">
+        <div class="sao-panel content-page">
+            <div class="sao-panel-header"><span class="sao-panel-diamond"></span><span>SPONSOR</span></div>
+            <div class="page-body" id="pageContent"><div class="loading-placeholder">加载中...</div></div>
+        </div>
+    </main>
+    <div class="sao-corner top-left"></div>
+    <div class="sao-corner bottom-right"></div>
+
+    <script src="js/common.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        HXZD.initNav();
+        await HXZD.loadBackground();
+        try {
+            const res = await fetch(HXZD.API + '/pages/sponsor');
+            const page = await res.json();
+            document.getElementById('pageContent').innerHTML = page.content || '<p>暂无内容</p>';
+        } catch(e) { document.getElementById('pageContent').innerHTML = '<p>加载失败</p>'; }
+    });
+    </script>
+    <script src="js/particles.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理面板 - HXZD</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="custom-bg" id="customBg"></div>
+    <div class="particles" id="particles"></div>
+
+    <div class="admin-layout">
+        <!-- 侧边栏 -->
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <span class="glitch-text-sm" data-text="HXZD">HXZD</span>
+                <span class="admin-logo-sub">ADMIN PANEL</span>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="admin-nav-item active" data-section="dashboard"><span>📊</span> 总览</a>
+                <a href="#" class="admin-nav-item" data-section="announcements"><span>📢</span> 公告管理</a>
+                <a href="#" class="admin-nav-item" data-section="forum"><span>💬</span> 论坛管理</a>
+                <a href="#" class="admin-nav-item" data-section="users"><span>👥</span> 用户管理</a>
+                <a href="#" class="admin-nav-item" data-section="pages"><span>📄</span> 页面管理</a>
+                <a href="#" class="admin-nav-item" data-section="settings"><span>⚙️</span> 网站设置</a>
+                <a href="#" class="admin-nav-item" data-section="servers"><span>🎮</span> 服务器管理</a>
+                <a href="#" class="admin-nav-item" data-section="worldmaps"><span>🗺️</span> 世界地图</a>
+                <a href="#" class="admin-nav-item" data-section="serverstatus"><span>🖥️</span> 监控配置</a>
+            </nav>
+            <div class="admin-sidebar-footer">
+                <a href="index.html">← 返回前台</a>
+                <a href="#" onclick="adminLogout()">退出登录</a>
+            </div>
+        </aside>
+
+        <!-- 主内容 -->
+        <main class="admin-main">
+            <!-- ===== 总览 ===== -->
+            <section class="admin-section active" id="sec-dashboard">
+                <h2 class="admin-section-title">📊 总览</h2>
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card"><div class="admin-stat-num" id="statUsers">0</div><div class="admin-stat-label">用户总数</div></div>
+                    <div class="admin-stat-card"><div class="admin-stat-num" id="statAnnouncements">0</div><div class="admin-stat-label">公告数</div></div>
+                    <div class="admin-stat-card"><div class="admin-stat-num" id="statPosts">0</div><div class="admin-stat-label">论坛帖子</div></div>
+                    <div class="admin-stat-card"><div class="admin-stat-num" id="statOnline">—</div><div class="admin-stat-label">在线玩家</div></div>
+                </div>
+            </section>
+
+            <!-- ===== 公告管理 ===== -->
+            <section class="admin-section" id="sec-announcements">
+                <h2 class="admin-section-title">📢 公告管理</h2>
+                <div class="admin-toolbar">
+                    <button class="sao-submit-btn btn-small" onclick="showAnnouncementForm()">✦ 新建公告</button>
+                </div>
+                <div class="admin-form-area" id="announcementFormArea" style="display:none">
+                    <div class="sao-panel" style="padding:20px">
+                        <input type="hidden" id="annEditId">
+                        <div class="sao-input-group"><label>标题</label><input type="text" id="annTitle" required></div>
+                        <div class="sao-input-group"><label>内容</label><textarea id="annContent" rows="6"></textarea></div>
+                        <div class="sao-input-group"><label><input type="checkbox" id="annPinned"> 置顶</label></div>
+                        <div class="admin-form-actions">
+                            <button class="sao-submit-btn btn-small" onclick="saveAnnouncement()">保存</button>
+                            <button class="sao-submit-btn btn-small btn-secondary" onclick="hideAnnouncementForm()">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-table-wrap" id="announcementsTable">加载中...</div>
+            </section>
+
+            <!-- ===== 论坛管理 ===== -->
+            <section class="admin-section" id="sec-forum">
+                <h2 class="admin-section-title">💬 论坛管理</h2>
+                <div class="admin-table-wrap" id="forumTable">加载中...</div>
+            </section>
+
+            <!-- ===== 用户管理 ===== -->
+            <section class="admin-section" id="sec-users">
+                <h2 class="admin-section-title">👥 用户管理</h2>
+                <div class="admin-table-wrap" id="usersTable">加载中...</div>
+            </section>
+
+            <!-- ===== 页面管理 ===== -->
+            <section class="admin-section" id="sec-pages">
+                <h2 class="admin-section-title">📄 页面管理</h2>
+                <div class="admin-pages-list" id="pagesEditor">加载中...</div>
+            </section>
+
+            <!-- ===== 网站设置 ===== -->
+            <section class="admin-section" id="sec-settings">
+                <h2 class="admin-section-title">⚙️ 网站设置</h2>
+                <div class="sao-panel" style="padding:24px">
+                    <div class="sao-input-group"><label>主页大标题</label><input type="text" id="setMainTitle" placeholder="输入主页大标题"></div>
+                    <div class="sao-input-group"><label>网站标题 (浏览器标签)</label><input type="text" id="setSiteTitle"></div>
+                    <div class="sao-input-group"><label>副标题</label><input type="text" id="setSubtitle"></div>
+                    <div class="sao-input-group"><label>描述</label><textarea id="setDescription" rows="3"></textarea></div>
+                    <div class="sao-input-group"><label>背景图 URL</label><input type="url" id="setBgUrl" placeholder="https://i.imgur.com/xxx.jpg"></div>
+                    <div class="sao-input-group"><label>网页图标 URL (favicon)</label><input type="url" id="setFaviconUrl" placeholder="https://example.com/favicon.ico"></div>
+                    <div class="sao-input-group"><label>页脚文字</label><input type="text" id="setFooterText" placeholder="如：@Apohs团队"></div>
+                    <button class="sao-submit-btn" onclick="saveSettings()"><span class="sao-panel-diamond"></span> 保存设置</button>
+                </div>
+            </section>
+
+            <!-- ===== 服务器管理 ===== -->
+            <section class="admin-section" id="sec-servers">
+                <h2 class="admin-section-title">🎮 服务器管理</h2>
+                <p style="color:var(--sao-text-muted);font-size:0.85rem;margin-bottom:16px">管理游戏服务器列表。通过 <a href="https://api.mcsrvstat.us/" target="_blank">mcsrvstat.us</a> API 自动查询状态。主页在线玩家为所有服务器总和，Server Info 多服务器时自动轮播。</p>
+                <div class="admin-toolbar">
+                    <button class="sao-submit-btn btn-small" onclick="showAddServerForm()">✦ 添加服务器</button>
+                    <button class="sao-submit-btn btn-small btn-secondary" onclick="refreshServers()">🔄 刷新状态</button>
+                </div>
+                <div class="admin-form-area" id="serverFormArea" style="display:none">
+                    <div class="sao-panel" style="padding:20px">
+                        <input type="hidden" id="srvEditId">
+                        <div class="sao-input-group"><label>服务器名称</label><input type="text" id="srvName" placeholder="如: 主服务器 / Mod服 / 创造服"></div>
+                        <div class="sao-input-group"><label>服务器地址</label><input type="text" id="srvAddress" placeholder="play.hxzd.com / mod.hxzd.com:25566"></div>
+                        <div class="sao-input-group"><label>服务器类型</label><input type="text" id="srvServerType" placeholder="如: 生存 / 模组 / 创造"></div>
+                        <div class="sao-input-group"><label>排序 (数字越小越前)</label><input type="number" id="srvSort" value="0"></div>
+                        <div class="sao-input-group"><label><input type="checkbox" id="srvEnabled" checked> 启用</label></div>
+                        <div class="admin-form-actions">
+                            <button class="sao-submit-btn btn-small" onclick="saveServer()">保存</button>
+                            <button class="sao-submit-btn btn-small btn-secondary" onclick="hideServerForm()">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-table-wrap" id="serversTable">加载中...</div>
+            </section>
+
+            <!-- ===== 世界地图管理 ===== -->
+            <section class="admin-section" id="sec-worldmaps">
+                <h2 class="admin-section-title">🗺️ 世界地图管理</h2>
+                <p style="color:var(--sao-text-muted);font-size:0.85rem;margin-bottom:16px">管理玩法页面的世界地图。第一张地图默认展开显示，其余地图折叠显示。支持任意嵌入 URL（BlueMap、Dynmap 等）。</p>
+                <div class="admin-toolbar">
+                    <button class="sao-submit-btn btn-small" onclick="showAddMapForm()">✦ 添加地图</button>
+                </div>
+                <div class="admin-form-area" id="mapFormArea" style="display:none">
+                    <div class="sao-panel" style="padding:20px">
+                        <input type="hidden" id="mapEditId">
+                        <div class="sao-input-group"><label>地图名称</label><input type="text" id="mapName" placeholder="如: 卫星地图 / BlueMap"></div>
+                        <div class="sao-input-group"><label>嵌入 URL</label><input type="url" id="mapEmbedUrl" placeholder="https://map.example.com/"></div>
+                        <div class="sao-input-group"><label>排序 (数字越小越前)</label><input type="number" id="mapSort" value="0"></div>
+                        <div class="sao-input-group"><label><input type="checkbox" id="mapEnabled" checked> 启用</label></div>
+                        <div class="admin-form-actions">
+                            <button class="sao-submit-btn btn-small" onclick="saveMap()">保存</button>
+                            <button class="sao-submit-btn btn-small btn-secondary" onclick="hideMapForm()">取消</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-table-wrap" id="mapsTable">加载中...</div>
+            </section>
+
+            <!-- ===== 监控配置 ===== -->
+            <section class="admin-section" id="sec-serverstatus">
+                <h2 class="admin-section-title">🖥️ 监控配置</h2>
+                <div class="sao-panel" style="padding:24px">
+                    <div class="sao-input-group"><label>嵌入页面 URL (Uptime Kuma 等)</label><input type="url" id="ssEmbedURL" placeholder="https://status.example.com/status/xxx"></div>
+                    <button class="sao-submit-btn" onclick="saveServerStatusConfig()"><span class="sao-panel-diamond"></span> 保存配置</button>
+                    <div class="admin-divider"></div>
+                    <h3 style="color:var(--sao-accent);margin-bottom:12px">当前所有服务器状态</h3>
+                    <div id="ssCurrentStatus" class="admin-stat-card" style="width:100%">加载中...</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/particles.js"></script>
+</body>
+</html>
